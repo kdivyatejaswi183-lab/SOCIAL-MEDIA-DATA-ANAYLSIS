@@ -33,33 +33,34 @@ with col3:
 with col4:
     st.metric("Max Views", f"{df['views'].max():,}")
 
-# 5. Visualizations - REDUCED SIZE AND REFINED
+# 5. Visualizations - ULTRA COMPACT
 st.subheader("📊 Performance Insights")
 tab1, tab2, tab3 = st.tabs(["Platform Comparison", "Engagement Trends", "Content Length"])
 
-# Small figure size constant to keep it consistent
-SMALL_FIG = (6, 4)
+# Ultra-short figure size (Width=5, Height=2)
+ULTRA_COMPACT = (5, 2)
 
 with tab1:
     st.write("### Engagement by Platform & Post Type")
-    fig1, ax1 = plt.subplots(figsize=SMALL_FIG) 
+    fig1, ax1 = plt.subplots(figsize=ULTRA_COMPACT) 
     sns.barplot(data=df, x='platform', y='total_engagement', hue='post_type', ax=ax1)
-    # Adjust legend position to prevent overlapping data
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+    # Move legend outside to the right to prevent overlap
+    ax1.legend(title='Post Type', bbox_to_anchor=(1.05, 1), loc='upper left', fontsize='x-small')
     plt.tight_layout() 
     st.pyplot(fig1)
 
 with tab2:
     st.write("### Likes vs. Comments Correlation")
-    fig2, ax2 = plt.subplots(figsize=SMALL_FIG) 
+    fig2, ax2 = plt.subplots(figsize=ULTRA_COMPACT) 
     sns.scatterplot(data=df, x='likes', y='comments', size='views', hue='platform', alpha=0.7, ax=ax2)
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
+    # Move legend outside to the right
+    ax2.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize='x-small')
     plt.tight_layout() 
     st.pyplot(fig2)
 
 with tab3:
     st.write("### Impact of Post Length on Engagement")
-    fig3, ax3 = plt.subplots(figsize=SMALL_FIG) 
+    fig3, ax3 = plt.subplots(figsize=ULTRA_COMPACT) 
     sns.regplot(data=df, x='post_length', y='engagement_rate', scatter_kws={'alpha':0.5}, line_kws={'color':'red'}, ax=ax3)
     plt.tight_layout() 
     st.pyplot(fig3)
@@ -85,4 +86,3 @@ st.dataframe(df.sort_values(by='engagement_rate', ascending=False))
 
 csv = df.to_csv(index=False).encode('utf-8')
 st.download_button("📥 Download Analyzed Data", data=csv, file_name="social_media_analysis.csv")
-
