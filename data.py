@@ -40,19 +40,19 @@ tab1, tab2, tab3 = st.tabs(["Platform Comparison", "Engagement Trends", "Content
 
 with tab1:
     st.write("### Engagement by Platform & Post Type")
-    fig1, ax1 = plt.subplots(figsize=(6, 3))
+    fig1, ax1 = plt.subplots(figsize=(5, 3))
     sns.barplot(data=df, x='platform', y='total_engagement', hue='post_type', ax=ax1)
     st.pyplot(fig1)
 
 with tab2:
     st.write("### Likes vs. Comments Correlation")
-    fig2, ax2 = plt.subplots(figsize=(6, 3))
+    fig2, ax2 = plt.subplots(figsize=(5, 3))
     sns.scatterplot(data=df, x='likes', y='comments', size='views', hue='platform', alpha=0.7, ax=ax2)
     st.pyplot(fig2)
 
 with tab3:
     st.write("### Impact of Post Length on Engagement")
-    fig3, ax3 = plt.subplots(figsize=(6, 3))
+    fig3, ax3 = plt.subplots(figsize=(5, 3))
     sns.regplot(data=df, x='post_length', y='engagement_rate', scatter_kws={'alpha':0.5}, line_kws={'color':'red'}, ax=ax3)
     st.pyplot(fig3)
 
@@ -80,4 +80,5 @@ st.dataframe(df.sort_values(by='engagement_rate', ascending=False))
 csv = df.to_csv(index=False).encode('utf-8')
 
 st.download_button("📥 Download Analyzed Data", data=csv, file_name="social_media_analysis.csv")
+
 
